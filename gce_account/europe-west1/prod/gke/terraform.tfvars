@@ -23,5 +23,5 @@ terragrunt {
 
 
 gke_name = "prod"
-gke_zone = "europe-west1b"
+gke_zone = "europe-west1-b"
 gke_nr_of_nodes = 3
