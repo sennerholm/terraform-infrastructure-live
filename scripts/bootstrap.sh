@@ -1,9 +1,17 @@
 #!/bin/bash
 set -e
-project_name="$USER-terraform-project3"
-tf_creds=~/.config/gcloud/terraform-project3.json
+project_number=3
+project_name="$USER-terraform-project${project_number}"
+tf_creds=~/.config/gcloud/terraform-project${project_number}.json
 gcloud_cmd="gcloud --project $project_name"
 gcloud --version >/dev/null 2>&1 || (echo "gcloud is required, please install, https://cloud.google.com/sdk/downloads " ; exit 1)
+
+# Check if Terraform is installed
+terraform --version >/dev/null 2>&1 || (echo "terraform is required, please install, https://www.terraform.io/intro/getting-started/install.html" ; exit 1)
+# Check if Terraform is installed
+
+terragrunt --version >/dev/null 2>&1 || (echo "terragrunt is required, please install, https://github.com/gruntwork-io/terragrunt/releases" ; exit 1)
+
 
 echo "Install gcloud components"
 for i in kubectl alpha beta gsutil
@@ -51,11 +59,6 @@ $gcloud_cmd projects add-iam-policy-binding ${project_name} \
   --role roles/storage.admin
 fi
 
-# Check if Terraform is installed
-terraform --version >/dev/null 2>&1 || (echo "terraform is required, please install, https://www.terraform.io/intro/getting-started/install.html" ; exit 1)
-# Check if Terraform is installed
-
-terragrunt --version >/dev/null 2>&1 || (echo "terragrunt is required, please install, https://github.com/gruntwork-io/terragrunt/releases" ; exit 1)
 
 # Creating account config for project
 cat > gce_account/terraform.tfvars <<EOF
@@ -67,20 +70,20 @@ terragrunt = {
       bucket = "${project_name}"
       project = "${project_name}"
       path   = "\${path_relative_to_include()}/terraform.tfstate"
-      credentials = "$tf_creds"
+      credentials = "${tf_creds}"
     }
   }
   terraform = {
     extra_arguments "account_vars" {
-      commands = ["${get_terraform_commands_that_need_vars()}"]
+      commands = ["\${get_terraform_commands_that_need_vars()}"]
 
       required_var_files = [
-        "${get_parent_tfvars_dir()}/terraform.tfvars"
+        "\${get_parent_tfvars_dir()}/terraform.tfvars"
 
       ]
     }
   }
 }
 google_project = "${project_name}"
-google_keyfile = "$tf_creds"
+google_keyfile = "${tf_creds}"
 EOF
