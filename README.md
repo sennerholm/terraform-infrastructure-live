@@ -10,7 +10,7 @@ First, register a new account at google with your own email
 https://accounts.google.com/SignUpWithoutGmail
 
 ### GCE account
-Follow [these instructions](https://github.com/kelseyhightower/craft-kubernetes-workshop/blob/master/labs/create-gce-account.md)
+Go to: https://cloud.google.com/compute/docs/signup and click on "Try it free"
 to create a new GCE account, this will require your credit card information
 although you will not be billed anything.
 
@@ -25,6 +25,13 @@ When you have run the bootstrap do the following to get an environment. Check th
 
 ```
  cd gce_account
- terragrunt plan-all
+ terragrunt plan-all (may fail because it has some dependencys)
  terragrunt apply-all
 ```
+
+## How to develop
+
+Fork, clone and run
+
+When developing a module use something like this to use the new module (in this example gocd-server)
+terragrunt plan --terragrunt-source ../../../../../terraform-infrastructure-modules//gocd-server
