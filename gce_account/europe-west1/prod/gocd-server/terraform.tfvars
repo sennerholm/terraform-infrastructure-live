@@ -4,7 +4,7 @@ terragrunt {
     path = "${find_in_parent_folders()}"
   }
   terraform = {
-    source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gocd-server?ref=87d49dcdda367faf346d33b061d3d61b30348080"
+    source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gocd-server?ref=2ce50169b9cc5ac15def85da452ceb6fe77b7d1b"
     extra_arguments "conditional_vars" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
 
@@ -17,6 +17,13 @@ terragrunt {
         "${get_tfvars_dir()}/../../region.tfvars",
         "${get_tfvars_dir()}/../environment.tfvars"
       ]
+    }
+    extra_arguments "go_ssh_key_path" {
+      commands = ["${get_terraform_commands_that_need_vars()}"]
+      arguments = [
+        "-var", "'go_ssh_key_path=${get_tfvars_dir()}'"
+      ]
+       
     }
   }
   dependencies {
