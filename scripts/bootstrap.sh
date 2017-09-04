@@ -57,6 +57,10 @@ $gcloud_cmd projects add-iam-policy-binding ${project_name} \
 $gcloud_cmd projects add-iam-policy-binding ${project_name} \
   --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
   --role roles/storage.admin
+# Needed for adding serviceaccounts. Maybe easier to change to project/owner instead...
+$gcloud_cmd projects add-iam-policy-binding ${project_name} \
+  --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
+  --role roles/resourcemanager.projectIamAdmin 
 fi
 
 
@@ -87,3 +91,10 @@ terragrunt = {
 google_project = "${project_name}"
 google_keyfile = "${tf_creds}"
 EOF
+
+# Creating bucket if needed
+if ! gsutil ls -p ${project_name} 2>&1 | grep "gs://${project_name}/" > /dev/null 
+then
+  echo "Creating bucket to store terraform remote state"
+  gsutil mb -p ${project_name} -l europe-west1 gs://${project_name}
+fi
