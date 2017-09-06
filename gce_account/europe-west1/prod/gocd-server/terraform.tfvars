@@ -4,7 +4,7 @@ terragrunt {
     path = "${find_in_parent_folders()}"
   }
   terraform = {
-    source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gocd-server?ref=2ce50169b9cc5ac15def85da452ceb6fe77b7d1b"
+    source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gocd-server?ref=c4d5c56c583b25ba14e43eca935729ec5b0b11f4"
     extra_arguments "conditional_vars" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
 
