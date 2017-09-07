@@ -98,3 +98,10 @@ then
   echo "Creating bucket to store terraform remote state"
   gsutil mb -p ${project_name} -l europe-west1 gs://${project_name}
 fi
+
+# Create ssh-key to be added to repos the go server should have the possiblitiy to reach
+if [ ! -f gce_account/europe-west1/prod/gocd-server/ssh/id_rsa ]
+then
+  echo "Creating ssh key to be added to private repos the go server should have the possiblitiy to reach"
+  ssh-keygen -f gce_account/europe-west1/prod/gocd-server/ssh/id_rsa -t rsa -N ''
+fi
