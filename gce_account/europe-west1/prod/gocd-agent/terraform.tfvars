@@ -4,7 +4,7 @@ terragrunt {
     path = "${find_in_parent_folders()}"
   }
   terraform = {
-    source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gocd-agent?ref=3142264118f337d599bf3c9bd6b721b49a11271c"
+    source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gocd-agent?ref=e7ae5246ffab08b96c2da0d82938d31967a73948"
     extra_arguments "conditional_vars" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
 
@@ -21,7 +21,7 @@ terragrunt {
     extra_arguments "terragrunt_config_path" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
       arguments = [
-        "-var", "terragrunt_config_path=${get_tfvars_dir()}/terragrunt_in_pod"
+        "-var", "terragrunt_config_path=${get_tfvars_dir()}/ssh"
       ]
        
     }
