@@ -7,7 +7,8 @@
 # Files generated from bootstrap.sh 
 gce_account/terraform.tfvars
 gce_account/account.tfvars
-
+gce_account/europe-west1/prod/gocd-server/ssh/
+gce_account/europe-west1/prod/gocd-agent/terragrunt_in_pod/
 # OS X
 .history
 .DS_Store
