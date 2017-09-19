@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="95">
+  <server artifactsdir="artifacts" agentAutoRegisterKey="95e0a630-c1ed-4c16-b636-2450b30ec18a" webhookSecret="b07ba338-b723-42fd-8962-e283f0ab68d7" commandRepositoryLocation="default" serverId="a05d4b9a-4719-4d14-af66-0b77909cd19a" />
+  <pipelines group="Med-log">
+    <pipeline name="Med-log-backendBAT" labeltemplate="1.0.${COUNT}" isLocked="false">
+      <materials>
+        <git url="git@github.com:sennerholm/med-log-backend.git" />
+      </materials>
+      <stage name="Build">
+        <jobs>
+          <job name="Buildartifact">
+            <tasks>
+              <exec command="env">
+                <runif status="passed" />
+              </exec>
+              <exec command="bash">
+                <arg>-x</arg>
+                <arg>scripts/build.sh</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <pipelines group="Todo">
+    <pipeline name="BuiltAndTest" labeltemplate="1.0.${COUNT}" isLocked="false">
+      <environmentvariables>
+        <variable name="IMAGENAME">
+          <value>todo-backend</value>
+        </variable>
+        <variable name="REPOSITORY_PREFIX">
+          <value>eu.gcr.io/mikan-terraform-project6</value>
+        </variable>
+      </environmentvariables>
+      <materials>
+        <git url="https://github.com/mhallendal/node-todo-backend" />
+      </materials>
+      <stage name="Build">
+        <jobs>
+          <job name="BuildArtifact">
+            <tasks>
+              <exec command="bash">
+                <arg>./scripts/buildverify-artifact.sh</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="bash">
+                <arg>./scripts/persist-artifact.sh</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="FastTest">
+        <jobs>
+          <job name="RunTests">
+            <tasks>
+              <exec command="env">
+                <runif status="passed" />
+              </exec>
+              <exec command="bash">
+                <arg>scripts/run-system-test.sh</arg>
+                <arg>--fast</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+    <pipeline name="DeployAndTest" labeltemplate="${docker}-${COUNT}" isLocked="false">
+      <materials>
+        <git url="https://github.com/sennerholm/terraform-infrastructure-live.git" invertFilter="true" materialName="terragrunt">
+          <filter>
+            <ignore pattern="gce_account/europe-west1/test/todo-backend-fast" />
+          </filter>
+        </git>
+        <pipeline pipelineName="BuiltAndTest" stageName="FastTest" materialName="docker" />
+      </materials>
+      <stage name="defaultStage">
+        <jobs>
+          <job name="defaultJob">
+            <tasks>
+              <exec command="echo">
+                <arg>Run Terragrunt</arg>
+              </exec>
+              <exec command="ls">
+                <runif status="passed" />
+              </exec>
+              <exec command="cp">
+                <arg>/run/terragrunt.conf/terraform.tfvars</arg>
+                <arg>gce_account</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="terragrunt" workingdir="gce_account/europe-west1/test/todo-backend-fast">
+                <arg>apply</arg>
+                <arg>-var</arg>
+                <arg>environment=test</arg>
+                <arg>-var</arg>
+                <arg>version=${GO_DEPENDENCY_LABEL_DOCKER}</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <agents>
+  </agents>
+</cruise>
