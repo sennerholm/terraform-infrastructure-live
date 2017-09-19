@@ -92,6 +92,37 @@ google_project = "${project_name}"
 google_keyfile = "${tf_creds}"
 EOF
 
+# Adding file in gocd-agent 
+mkdir -p gce_account/europe-west1/prod/gocd-agent/terragrunt_in_pod
+in_container_tf_creds="/var/run/secrets/cloud.google.com/service-account.json"
+cat > gce_account/europe-west1/prod/gocd-agent/terragrunt_in_pod/terraform.tfvars<<EOF
+// Created by scripts/bootstrap.sh
+terragrunt = {
+  remote_state {
+    backend = "gcs"
+    config {
+      bucket = "${project_name}"
+      project = "${project_name}"
+      path   = "\${path_relative_to_include()}/terraform.tfstate"
+      credentials = "${in_container_tf_creds}"
+    }
+  }
+  terraform = {
+    extra_arguments "account_vars" {
+      commands = ["\${get_terraform_commands_that_need_vars()}"]
+
+      required_var_files = [
+        "\${get_parent_tfvars_dir()}/terraform.tfvars"
+
+      ]
+    }
+  }
+}
+google_project = "${project_name}"
+google_keyfile = "${in_container_tf_creds}"
+EOF
+
+
 # Creating bucket if needed
 if ! gsutil ls -p ${project_name} 2>&1 | grep "gs://${project_name}/" > /dev/null 
 then
@@ -103,5 +134,6 @@ fi
 if [ ! -f gce_account/europe-west1/prod/gocd-server/ssh/id_rsa ]
 then
   echo "Creating ssh key to be added to private repos the go server should have the possiblitiy to reach"
+  mkdir -p gce_account/europe-west1/prod/gocd-server/ssh
   ssh-keygen -f gce_account/europe-west1/prod/gocd-server/ssh/id_rsa -t rsa -N ''
 fi
