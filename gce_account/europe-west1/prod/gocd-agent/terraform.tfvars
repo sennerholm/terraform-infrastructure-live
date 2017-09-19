@@ -21,7 +21,7 @@ terragrunt {
     extra_arguments "terragrunt_config_path" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
       arguments = [
-        "-var", "terragrunt_config_path=${get_tfvars_dir()}/ssh"
+        "-var", "ssh_key_path=${get_tfvars_dir()}/terragrunt_in_pod"
       ]
        
     }
@@ -30,3 +30,4 @@ terragrunt {
     paths = ["../gke","../gocd-server"]
   }
 }
+terragrunt_config_path
