@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-project_number=3
+project_number=4
 project_name="$USER-terraform-project${project_number}"
 tf_creds=~/.config/gcloud/terraform-project${project_number}.json
 gcloud_cmd="gcloud --project $project_name"
@@ -32,6 +32,7 @@ gcloud alpha billing accounts projects link ${project_name} \
 
 
 echo "Enable Required Google APIs"
+# In future, change to only the stuff needed to enable more apis, and move the other ones to the parts requiring them
 for i in cloudresourcemanager.googleapis.com \
 	cloudbilling.googleapis.com \
 	iam.googleapis.com \
@@ -53,14 +54,14 @@ $gcloud_cmd iam service-accounts keys create ${tf_creds} \
   --iam-account terraform@${project_name}.iam.gserviceaccount.com
 $gcloud_cmd projects add-iam-policy-binding ${project_name} \
   --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
-  --role roles/editor
-$gcloud_cmd projects add-iam-policy-binding ${project_name} \
-  --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
-  --role roles/storage.admin
+  --role roles/owner
+# $gcloud_cmd projects add-iam-policy-binding ${project_name} \
+#  --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
+#   --role roles/storage.admin
 # Needed for adding serviceaccounts. Maybe easier to change to project/owner instead...
-$gcloud_cmd projects add-iam-policy-binding ${project_name} \
-  --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
-  --role roles/resourcemanager.projectIamAdmin 
+# $gcloud_cmd projects add-iam-policy-binding ${project_name} \
+#  --member serviceAccount:terraform@${project_name}.iam.gserviceaccount.com \
+#  --role roles/resourcemanager.projectIamAdmin 
 fi
 
 
