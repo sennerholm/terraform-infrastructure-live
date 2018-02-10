@@ -15,7 +15,8 @@ terragrunt {
 
       optional_var_files = [
         "${get_tfvars_dir()}/../../region.tfvars",
-        "${get_tfvars_dir()}/../environment.tfvars"
+        "${get_tfvars_dir()}/../environment.tfvars",
+        "${get_tfvars_dir()}/version.tfvars"
       ]
     }
   }
@@ -25,3 +26,4 @@ terragrunt {
 }
 
 environment = "test"
+# mode = "deployment"
