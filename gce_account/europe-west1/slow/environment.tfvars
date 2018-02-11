@@ -1,1 +1,1 @@
-environment = "medium"
+environment = "slow"
