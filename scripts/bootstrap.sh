@@ -139,9 +139,12 @@ then
   mkdir -p gce_account/europe-west1/prod/gocd-server/ssh
   ssh-keygen -f gce_account/europe-west1/prod/gocd-server/ssh/id_rsa -t rsa -N ''
 fi
-google_auth=`base64 -w 0 ${tfcreds}`
+# Enable Appengine
+${gcloud_cmd} app create --region europe-west
+google_auth=`base64 -w 0 ${tf_creds}`
 # Print stuff for the Circle CI
-echo Please add the followin to CircleCI:
+echo Please add the followin to CircleCI: 
+echo Settings->Context->Create Context->org-global
 echo "GOOGLE_PROJECT_ID=${project_name}"
 echo "GOOGLE_COMPUTE_ZONE=europe-west1-b"
 echo "GOOGLE_AUTH=${google_auth}"
