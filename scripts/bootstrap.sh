@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
-project_number=4
-project_name="$1-$USER-terraform-project${project_number}"
-tf_creds=~/.config/gcloud/terraform-project${project_number}.json
+project_prefix=$1
+project_number=$2
+project_name="$1-$USER-tf-pr${project_number}"
+tf_creds=~/.config/gcloud/$1-tf-pr${project_number}.json
 gcloud_cmd="gcloud --project $project_name"
 gcloud --version >/dev/null 2>&1 || (echo "gcloud is required, please install, https://cloud.google.com/sdk/downloads " ; exit 1)
 
