@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 project_number=4
-project_name="$USER-terraform-project${project_number}"
+project_name="$1-$USER-terraform-project${project_number}"
 tf_creds=~/.config/gcloud/terraform-project${project_number}.json
 gcloud_cmd="gcloud --project $project_name"
 gcloud --version >/dev/null 2>&1 || (echo "gcloud is required, please install, https://cloud.google.com/sdk/downloads " ; exit 1)
@@ -138,3 +138,9 @@ then
   mkdir -p gce_account/europe-west1/prod/gocd-server/ssh
   ssh-keygen -f gce_account/europe-west1/prod/gocd-server/ssh/id_rsa -t rsa -N ''
 fi
+google_auth=`base64 -w 0 ${tfcreds}`
+# Print stuff for the Circle CI
+echo Please add the followin to CircleCI:
+echo "GOOGLE_PROJECT_ID=${project_name}"
+echo "GOOGLE_COMPUTE_ZONE=europe-west1-b"
+echo "GOOGLE_AUTH=${google_auth}"
