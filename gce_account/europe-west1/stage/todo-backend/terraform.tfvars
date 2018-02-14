@@ -4,7 +4,7 @@ terragrunt {
     path = "${find_in_parent_folders()}"
   }
   terraform = {
-    source = "github.com/sennerholm/node-todo-backend.git//terraform/todo-backend?ref=237285fae9337ae60b4cb86652f4a36545e79eee"
+    source = "github.com/sennerholm/node-todo-backend.git//terraform/todo-backend?ref=82948fa61dc302c2f0f410f9246e7fc0ea946def"
     extra_arguments "conditional_vars" {
       commands = ["${get_terraform_commands_that_need_vars()}"]
 
