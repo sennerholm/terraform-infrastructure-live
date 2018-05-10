@@ -43,7 +43,7 @@ do
 	$gcloud_cmd services enable $i
 done
 
-gcloud beta organizations list 2>&1 | grep 'Listed 0 items'  >/dev/null  || (echo "You are in an organizations, the permission stuff maybe different!"; read)
+gcloud beta organizations list 2>&1 | grep 'Listed 0 items'  >/dev/null  || (echo "You are in an organizations, the permission stuff maybe different!")
 
 
 if ! $gcloud_cmd iam service-accounts list  | grep terraform@${project_name}.iam.gserviceaccount.com >> /dev/null 
