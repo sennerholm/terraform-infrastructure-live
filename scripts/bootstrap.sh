@@ -40,7 +40,7 @@ for i in cloudresourcemanager.googleapis.com \
 	compute.googleapis.com \
 	container.googleapis.com
 do
-	$gcloud_cmd service-management enable $i
+	$gcloud_cmd services enable $i
 done
 
 gcloud beta organizations list 2>&1 | grep 'Listed 0 items'  >/dev/null  || (echo "You are in an organizations, the permission stuff maybe different!"; read)
