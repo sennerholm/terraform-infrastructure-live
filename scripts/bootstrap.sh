@@ -141,10 +141,11 @@ then
 fi
 # Enable Appengine
 ${gcloud_cmd} app create --region europe-west
-google_auth=`base64 -w 0 ${tf_creds}`
+google_auth=`base64 -w 0 ${tf_creds} 2>/dev/null` ||  google_auth=`base64 ${tf_creds}`
+
 # Print stuff for the Circle CI
 echo Please add the followin to CircleCI: 
-echo Settings->Context->Create Context->org-global
-echo "GOOGLE_PROJECT_ID=${project_name}"
-echo "GOOGLE_COMPUTE_ZONE=europe-west1-b"
-echo "GOOGLE_AUTH=${google_auth}"
+echo 'Settings->Context->Create Context->org-global'
+echo "GOOGLE_PROJECT_ID = ${project_name}"
+echo "GOOGLE_COMPUTE_ZONE = europe-west1-b"
+echo "GOOGLE_AUTH = ${google_auth}"
