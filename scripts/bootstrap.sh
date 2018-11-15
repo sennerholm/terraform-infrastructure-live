@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: bootstrap.sh [prefix] [project number]";
+	exit 1
+    fi
 project_prefix=$1
 project_number=$2
 project_name="$1-$USER-tf-pr${project_number}"
