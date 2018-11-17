@@ -26,13 +26,13 @@ done
 
 if ! gcloud projects list | grep $project_name >> /dev/null 
 then
-	echo "Creating project"
+	echo "Creating project called: $project_name"
 	gcloud projects create $project_name 
 	gcloud --project mikan-terraform-project config set compute/zone europe-west1-b
 fi
 
 echo Enable billing
-gcloud alpha billing accounts projects link ${project_name} \
+gcloud alpha billing projects link ${project_name} \
   --billing-account `gcloud -q beta billing accounts list | grep True | head -1 | awk '{print $1}'`
 
 
