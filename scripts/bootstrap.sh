@@ -28,7 +28,7 @@ if ! gcloud projects list | grep $project_name >> /dev/null
 then
 	echo "Creating project called: $project_name"
 	gcloud projects create $project_name 
-	gcloud --project mikan-terraform-project config set compute/zone europe-west1-b
+	gcloud --project $project_name config set compute/zone europe-west1-b
 fi
 
 echo Enable billing
