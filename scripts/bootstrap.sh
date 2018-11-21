@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: bootstrap.sh [prefix] [project number]";
+	exit 1
+    fi
 project_prefix=$1
 project_number=$2
 project_name="$1-$USER-tf-pr${project_number}"
@@ -22,13 +26,13 @@ done
 
 if ! gcloud projects list | grep $project_name >> /dev/null 
 then
-	echo "Creating project"
+	echo "Creating project called: $project_name"
 	gcloud projects create $project_name 
-	gcloud --project mikan-terraform-project config set compute/zone europe-west1-b
+	gcloud --project $project_name config set compute/zone europe-west1-b
 fi
 
 echo Enable billing
-gcloud alpha billing accounts projects link ${project_name} \
+gcloud alpha billing projects link ${project_name} \
   --billing-account `gcloud -q beta billing accounts list | grep True | head -1 | awk '{print $1}'`
 
 
