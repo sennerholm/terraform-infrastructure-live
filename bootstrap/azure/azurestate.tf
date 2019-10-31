@@ -25,7 +25,6 @@ resource "azurerm_storage_account" "account" {
 
 resource "azurerm_storage_container" "container" {
   name                  = "tfstate"
-  resource_group_name   = "${azurerm_resource_group.state.name}"
   storage_account_name  = "${azurerm_storage_account.account.name}"
   container_access_type = "private"
 }
@@ -36,6 +35,15 @@ output "storage_account_name" {
   description = "The AzureStorageAccountName"
 }
 
+resource "local_file" "export_vars" {
+  count    = "1"
+  filename = "../../azure/sourceme.terraform.sh"
+
+  content = <<EOT
+export ARM_ACCESS_KEY="${azurerm_storage_account.account.primary_access_key}"
+EOT
+}
+
 output "storage_account_key" {
   value       = "${azurerm_storage_account.account.primary_access_key}"
   description = "The AzureStorageAccountKey (primary)"
@@ -43,5 +51,5 @@ output "storage_account_key" {
 
 output "storage_container" {
   value       = "${azurerm_storage_container.container.name}"
-  description = "The name of the contaienr to use"
+  description = "The name of the container to use"
 }

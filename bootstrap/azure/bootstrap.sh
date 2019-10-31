@@ -14,7 +14,7 @@ fi
 #terragrunt --version >/dev/null 2>&1 || (echo "terragrunt is required, please install, https://github.com/gruntwork-io/terragrunt/releases" ; exit 1)
 
 # Check if we already have created sourceme
-if [ ! -f ../../azure/sourceme.sh ]; then
+if [ ! -f ../../azure/personal/sourceme.sh ]; then
   # Based on: https://docs.microsoft.com/sv-se/azure/virtual-machines/linux/terraform-install-configure?toc=https%3A%2F%2Fdocs.microsoft.com%2Fsv-se%2Fazure%2Fterraform%2Ftoc.json&bc=https%3A%2F%2Fdocs.microsoft.com%2Fsv-se%2Fazure%2Fbread%2Ftoc.json
   echo "Createing a service principal to use for terragrunt"
   az login
@@ -33,10 +33,11 @@ if [ ! -f ../../azure/sourceme.sh ]; then
   echo "export ARM_ENVIRONMENT=public" >> tmpsourcemesh
   echo "export TF_VAR_client_secret=\$ARM_CLIENT_SECRET" >> tmpsourcemesh
   echo "export TF_VAR_client_id=\$ARM_CLIENT_ID" >> tmpsourcemesh
-  mv tmpsourcemesh ../../azure/sourceme.sh
+  echo ". sourceme.terraform.sh" >> tmpsourcemesh
+  mv tmpsourcemesh ../../azure/personal/sourceme.sh
   rm sp.json
 fi
-source ../../azure/sourceme.sh
+source ../../azure/personal/sourceme.sh
 echo "Running terraform to create other resources (stateaccounts etc)"
 terraform init 
 terraform apply 
