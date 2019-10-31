@@ -12,7 +12,7 @@ gce_account/europe-west1/prod/gocd-server/ssh/
 gce_account/europe-west1/prod/gocd-agent/terragrunt_in_pod/
 # Files generated from azure bootstrap
 bootstrap/azure/sp.json
-azure/sourceme.sh
+*sourceme*
 # OS X
 .history
 .DS_Store
