@@ -3,6 +3,7 @@
 .terraform
 *.tfstate
 *.tfstate.backup
+.terragrunt-cache
 
 # Files generated from bootstrap.sh 
 gce_account/terraform.tfvars
