@@ -37,7 +37,7 @@ output "storage_account_name" {
 
 resource "local_file" "export_vars" {
   count    = "1"
-  filename = "../../azure/sourceme.terraform.sh"
+  filename = "../../azure/personal/sourceme.terraform.sh"
 
   content = <<EOT
 export ARM_ACCESS_KEY="${azurerm_storage_account.account.primary_access_key}"
