@@ -5,7 +5,7 @@ include {
 
 
 terraform {
-  source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//azure/vote?ref=master"
+  source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//azure/vote-terraform?ref=master"
 }
 
 
@@ -27,4 +27,5 @@ inputs = {
   kubernetes_client_certificate     = dependency.kubernetes.outputs.client_certificate
   kubernetes_cluster_ca_certificate = dependency.kubernetes.outputs.cluster_ca_certificate
   full_resourcegroup_name           = dependency.resourcegroup.outputs.name
+  pod_scale                         = 1
 }
