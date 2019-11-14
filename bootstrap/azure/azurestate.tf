@@ -10,8 +10,13 @@ resource "azurerm_resource_group" "state" {
   location = "WestEurope"
 }
 
+resource "random_integer" "account_suffix" {
+  min = 1
+  max = 50000
+}
+
 resource "azurerm_storage_account" "account" {
-  name                     = "terragrunt"
+  name                     = "terragrunt${random_integer.account_suffix.result}"
   resource_group_name      = "${azurerm_resource_group.state.name}"
   location                 = "${azurerm_resource_group.state.location}"
   account_tier             = "Standard"
@@ -37,10 +42,11 @@ output "storage_account_name" {
 
 resource "local_file" "export_vars" {
   count    = "1"
-  filename = "../../azure/personal/sourceme.terraform.sh"
+  filename = "../../azure/personal/test/sourceme.terraform.sh"
 
   content = <<EOT
 export ARM_ACCESS_KEY="${azurerm_storage_account.account.primary_access_key}"
+export STORAGE_ACCOUNT_NAME="${azurerm_storage_account.account.name}"
 EOT
 }
 

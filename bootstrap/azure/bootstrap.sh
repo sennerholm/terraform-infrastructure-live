@@ -34,10 +34,10 @@ if [ ! -f ../../azure/personal/sourceme.sh ]; then
   echo "export TF_VAR_client_secret=\$ARM_CLIENT_SECRET" >> tmpsourcemesh
   echo "export TF_VAR_client_id=\$ARM_CLIENT_ID" >> tmpsourcemesh
   echo ". sourceme.terraform.sh" >> tmpsourcemesh
-  mv tmpsourcemesh ../../azure/personal/sourceme.sh
+  mv tmpsourcemesh ../../azure/personal/test/sourceme.sh
   rm sp.json
 fi
-source ../../azure/personal/sourceme.sh
+source ../../azure/personal/test/sourceme.sh
 echo "Running terraform to create other resources (stateaccounts etc)"
 terraform init 
 terraform apply 

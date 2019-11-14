@@ -9,7 +9,7 @@ inputs = {
 remote_state {
   backend = "azurerm"
   config = {
-    storage_account_name = "terragrunt"
+    storage_account_name = "${get_env("STORAGE_ACCOUNT_NAME", "terragrunt")}"
     container_name       = "tfstate"
     key                  = "${path_relative_to_include()}/terraform.tfstate"
   }
