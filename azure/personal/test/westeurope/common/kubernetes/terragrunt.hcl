@@ -17,4 +17,5 @@ terraform {
 
 inputs = {
   k8s_resourcegroup_name = dependency.resourcegroup.outputs.name
+  agent_count            = 2 # Set to same as min so we doesn't have to wait for scaleup when testing
 }
