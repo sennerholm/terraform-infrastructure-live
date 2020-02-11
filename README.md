@@ -17,7 +17,7 @@ although you will not be billed anything.
 ## Running
 
 ### Once
-Use `scripts/bootstrap.sh` to bootstrap your environment. It creates a new google project and ensure that you have everything enabled and installed. 
+Use `bootstrap/google/bootstrap.sh` to bootstrap your environment. It creates a new google project and ensure that you have everything enabled and installed. 
 
 ### Get your environment running and up to date!
 
