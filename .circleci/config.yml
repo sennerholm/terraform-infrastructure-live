@@ -7,7 +7,7 @@ jobs:
             - checkout
             - run: 
                 name: PWD
-                command: pwd
+                command: "gcloud projects list; gsutil ls -p $GOOGLE_PROJECT"
             - run: 
                 name: Google Authenticate
                 command: "echo ${GOOGLE_AUTH} | base64 -i --decode > gcp-key.json ; gcloud auth activate-service-account --key-file gcp-key.json"
