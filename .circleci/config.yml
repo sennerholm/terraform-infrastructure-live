@@ -9,10 +9,9 @@ jobs:
                 name: checking env
                 command: env
             - run: 
-                name: checking files
-                command: ls
-
-
+                name: Update kubernetes
+                working_directory: gce_multiple/extras/
+                command: planverifyapply.sh common/kubernetes
 
 # Orchestrate or schedule a set of jobs
 workflows:
