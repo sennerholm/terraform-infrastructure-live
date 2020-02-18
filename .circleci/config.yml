@@ -1,23 +1,47 @@
 version: 2.1
 jobs:
-    update_kubernetes:
+    common_kubernetes:
         docker:
             - image: sennerholm/google-cloud-sdk-terraform
         steps:
             - checkout
             - run: 
                 name: Google Authenticate
-                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json; export GOOGLE_CREDENTIALS=/tmp/gcp-key.json; export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json;"
-            - run: 
-                name: PWD
-                command: "gcloud projects list; gsutil ls -p $GOOGLE_PROJECT; env"
+                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json"
             - run: 
                 name: Update kubernetes
                 working_directory: gce_multiple/extras/
                 command: ./planverifyapply.sh common/kubernetes
+    voting_redis:
+        docker:
+            - image: sennerholm/google-cloud-sdk-terraform
+        steps:
+            - checkout
+            - run: 
+                name: Google Authenticate
+                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json"
+            - run: 
+                name: Update kubernetes
+                working_directory: gce_multiple/extras/
+                command: ./planverifyapply.sh votingService/redis
+
+    voting_vote:
+        docker:
+            - image: sennerholm/google-cloud-sdk-terraform
+        steps:
+            - checkout
+            - run: 
+                name: Google Authenticate
+                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json"
+            - run: 
+                name: Update kubernetes
+                working_directory: gce_multiple/extras/
+                command: ./planverifyapply.sh votingService/vote
 
 # Orchestrate or schedule a set of jobs
 workflows:
     update_google:
         jobs:
-            - update_kubernetes
+            - common_kubernetes
+            - voting_redis
+            - voting_vote
