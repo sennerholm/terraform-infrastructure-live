@@ -1,22 +1,21 @@
 version: 2.1
 jobs:
-  update_kubernetes:
-    docker:
-      - image: sennerholm/google-cloud-sdk-terraform
-  steps:
-    - checkout
-    - run: 
-       name: checking env
-       command: env
-    - run: 
-        name: checking files
-        command: ls
+    update_kubernetes:
+        docker:
+            - image: sennerholm/google-cloud-sdk-terraform
+        steps:
+            - checkout
+            - run: 
+                name: checking env
+                command: env
+            - run: 
+                name: checking files
+                command: ls
 
 
 
 # Orchestrate or schedule a set of jobs
 workflows:
-  update_google:
-    # Run the welcome/run job in its own container
-    jobs:
-      - update_kubernetes
+    update_google:
+        jobs:
+            - update_kubernetes
