@@ -6,12 +6,8 @@ jobs:
         steps:
             - checkout
             - run: 
-                name: checking env
-                command: env
-            - run: 
-                name: Check dirs
-                working_directory: gce_multiple/extras/
-                command: ls
+                name: Google Authenticate
+                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > gcp-key.json ; gcloud auth activate-service-account --key-file gcp-key.json"
             - run: 
                 name: Update kubernetes
                 working_directory: gce_multiple/extras/
