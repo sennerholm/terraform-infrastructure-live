@@ -4,7 +4,7 @@ include {
 }
 
 terraform {
-  source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gce/kubernetes?ref=master"
+  source = "github.com/sennerholm/terraform-infrastructure-modules.git//gce/kubernetes?ref=master"
 }
 
 # Overrides
