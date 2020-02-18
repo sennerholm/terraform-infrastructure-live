@@ -7,10 +7,10 @@ jobs:
             - checkout
             - run: 
                 name: Google Authenticate
-                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json; export GOOGLE_CREDENTIALS=/tmp/gcp-key.json;export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json;"
+                command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json; export GOOGLE_CREDENTIALS=/tmp/gcp-key.json; export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json;"
             - run: 
                 name: PWD
-                command: "gcloud projects list; gsutil ls -p $GOOGLE_PROJECT"
+                command: "gcloud projects list; gsutil ls -p $GOOGLE_PROJECT; env"
             - run: 
                 name: Update kubernetes
                 working_directory: gce_multiple/extras/
