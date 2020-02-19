@@ -76,6 +76,7 @@ export GOOGLE_PROJECT="${project_name}"
 EOF
 fi
 
+source ../../gce_multiple/sourceme.sh
 
 
 # Creating bucket if needed
