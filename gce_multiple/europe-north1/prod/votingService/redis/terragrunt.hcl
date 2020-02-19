@@ -5,7 +5,7 @@ include {
 
 
 terraform {
-  source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gce/redis?ref=master"
+  source = "git@github.com:sennerholm/terraform-infrastructure-modules.git//gce/redis?ref=85da54c79d3a48ac8db2ac81019f4116d4caa339"
 }
 
 
