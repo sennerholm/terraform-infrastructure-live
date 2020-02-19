@@ -17,8 +17,8 @@ do
   echo "Running plan"
   terragrunt plan -out tfplan.binary
   terragrunt show -json tfplan.binary > tfplan.json
-  opa=(opa eval --format pretty --data ${OLDPWD}/${component}.rego  --input tfplan.json "data.terraform.analysis.authz")
-  if [ opa != "true" ]; then
+  opa=`opa eval --format pretty --data ${OLDPWD}/${component}.rego  --input tfplan.json "data.terraform.analysis.authz"`
+  if [ ${opa} != "true" ]; then
     echo OPA policy failed, blast over limit
     opa eval --format pretty --data ${OLDPWD}/${component}.rego  --input tfplan.json "data.terraform.analysis.score"
     exit 1
