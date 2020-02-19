@@ -1,9 +1,14 @@
 # terraform-infrastructure-live
 
-Sample project inspired from https://blog.gruntwork.io/how-to-create-reusable-infrastructure-with-terraform-modules-25526d65f73d https://github.com/gruntwork-io/terragrunt-infrastructure-live-example https://medium.com/@kief/https-medium-com-kief-using-pipelines-to-manage-environments-with-infrastructure-as-code-b37285a1cbf5
-Running on Google GCE. 
+Sample project inspired from https://blog.gruntwork.io/how-to-create-reusable-infrastructure-with-terraform-modules-25526d65f73d https://github.com/gruntwork-io/terragrunt-infrastructure-live-example 
+https://medium.com/@kief/https-medium-com-kief-using-pipelines-to-manage-environments-with-infrastructure-as-code-b37285a1cbf5
 
-## Required prereq
+Running on Google GCE or Azure.
+* gce_account Old repo, not upgraded to new Terraform/Terragrunt
+* gce_multiple Sample repo with VotingService running in GKE and Google Redis
+* Azure Sample repo with VotingService and Redis Containers running in Azure Kubernetes 
+
+## Required prereq gce_multiple
 
 ### Google Account
 First, register a new account at google with your own email
@@ -17,15 +22,14 @@ although you will not be billed anything.
 ## Running
 
 ### Once
-Use `bootstrap/google/bootstrap.sh` to bootstrap your environment. It creates a new google project and ensure that you have everything enabled and installed. 
+Use `bootstrap/gce_multiple/bootstrap.sh` to bootstrap your environment. It creates a new google project and ensure that you have everything enabled and installed. 
 
 ### Get your environment running and up to date!
 
-When you have run the bootstrap do the following to get an environment. Check the `terragrunt plan-all` output before apply
+When you have run the bootstrap do the following to get an environment, it also creates a file you could source to get the right ENVs. To get the environment upp and running
 
 ```
- cd gce_account
- terragrunt plan-all (may fail because it has some dependencys)
+ cd gce_multiple
  terragrunt apply-all
 ```
 
@@ -34,4 +38,4 @@ When you have run the bootstrap do the following to get an environment. Check th
 Fork, clone and run
 
 When developing a module use something like this to use the new module (in this example gocd-server)
-terragrunt plan --terragrunt-source ../../../../../terraform-infrastructure-modules//gocd-server
+terragrunt plan --terragrunt-source PATH_TO_YOUR_MODIFIED_Module
