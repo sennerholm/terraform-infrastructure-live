@@ -21,7 +21,7 @@ jobs:
                 name: Google Authenticate
                 command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json"
             - run: 
-                name: Update kubernetes
+                name: Update votingService/redis
                 working_directory: gce_multiple/extras/
                 command: ./planverifyapply.sh votingService/redis
 
@@ -34,7 +34,11 @@ jobs:
                 name: Google Authenticate
                 command: "echo ${GOOGLE_AUTH} | base64 -i --decode > /tmp/gcp-key.json ; gcloud auth activate-service-account --key-file /tmp/gcp-key.json"
             - run: 
-                name: Update kubernetes
+                name: "Populate /root/.kube/config"
+                command: "mkdir -p /root/.kube; touch /root/.kube/config"
+
+            - run: 
+                name: Update votingService/vote
                 working_directory: gce_multiple/extras/
                 command: ./planverifyapply.sh votingService/vote
 
