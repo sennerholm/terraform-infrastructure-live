@@ -37,5 +37,8 @@ When you have run the bootstrap do the following to get an environment, it also 
 
 Fork, clone and run
 
-When developing a module use something like this to use the new module (in this example gocd-server)
-terragrunt plan --terragrunt-source PATH_TO_YOUR_MODIFIED_Module
+When developing a module use something like this to use the new module (in this example vote-terraform)
+
+```
+  terragrunt apply --terragrunt-source ~/git/terraform-infrastructure-modules/gce/vote-terraform
+```
