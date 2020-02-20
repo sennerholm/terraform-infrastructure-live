@@ -32,8 +32,8 @@ then
 fi
 
 #echo Enable billing
-#gcloud alpha billing projects link ${project_name} \
-#  --billing-account `gcloud -q beta billing accounts list | grep True | head -1 | awk '{print $1}'`
+gcloud alpha billing projects link ${project_name} \
+  --billing-account `gcloud -q beta billing accounts list | grep True | head -1 | awk '{print $1}'`
 
 
 echo "Enable Required Google APIs"
