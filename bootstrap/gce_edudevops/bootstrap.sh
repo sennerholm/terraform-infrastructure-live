@@ -13,12 +13,6 @@ mkdir -p ~/gopath/bin
 terragrunt --version >/dev/null 2>&1 || (echo "terragrunt is required, installing in ~/gopath/bin" ; curl https://github.com/gruntwork-io/terragrunt/releases/download/v0.23.38/terragrunt_linux_amd64 -o ~/gopath/bin/terragrunt; chmod a+x ~/gopath/bin/terragrunt)
 
 
-echo "Install gcloud components"
-for i in alpha beta gsutil
-do
-	gcloud -q components install $i
-done 
-
 if ! gcloud projects list | grep $project_name >> /dev/null 
 then
 	echo "Creating project called: $project_name"
