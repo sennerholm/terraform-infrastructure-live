@@ -6,7 +6,7 @@ To have the possiblity to access Google cloud I need to setup an environment. To
 
 Try running a command now:
 ```bash
-  cd /bootstrap/gce_edudevops
+  cd bootstrap/gce_edudevops
   ./bootstrap.sh prefix suffix
 ```
 

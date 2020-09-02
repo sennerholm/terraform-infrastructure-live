@@ -14,7 +14,7 @@ terragrunt --version >/dev/null 2>&1 || (echo "terragrunt is required, installin
 
 
 echo "Install gcloud components"
-for i in kubectl alpha beta gsutil
+for i in alpha beta gsutil
 do
 	gcloud -q components install $i
 done 
