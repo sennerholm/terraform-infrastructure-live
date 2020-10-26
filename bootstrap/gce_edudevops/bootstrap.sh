@@ -74,4 +74,9 @@ then
   echo "Creating bucket to store terraform remote state"
   gsutil mb -p ${GOOGLE_PROJECT} -l europe-north1 gs://${GOOGLE_PROJECT}
 fi
-
+# Print stuff for the Circle CI
+echo Environment variables that need to be added to CircleCI
+echo 'Organization Settings->Context->Create Context->org-global'
+echo "GOOGLE_PROJECT_ID = ${project_name}"
+echo "GOOGLE_COMPUTE_ZONE = europe-west1-b"
+echo "GOOGLE_AUTH =  $(base64 -w0 $tfcreds)"
