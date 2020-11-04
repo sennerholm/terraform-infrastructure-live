@@ -32,6 +32,7 @@ for i in cloudresourcemanager.googleapis.com \
 	iam.googleapis.com \
 	compute.googleapis.com \
 	container.googleapis.com \
+	artifactregistry.googleapis.com \
 	redis.googleapis.com
 do
 	$gcloud_cmd services enable $i
