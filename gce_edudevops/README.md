@@ -54,22 +54,21 @@ The reason to create a context is to make the variables reusable ower multiple p
 In Circle we need to change the workflow to have the possibility to use the "Context".
 
 ```
-version: 2
+version: 2.1
+workflows:
+  build-and-push:
+    jobs:
+      - build:
+          context: devopsedu-global
 jobs:
   build:
     machine: true
     steps:
-    - checkout
-    - run: 
-      name: Checking environment
-      command: env
-    - run: docker build -t company/app:$CIRCLE_BRANCH .
-workflows:
-  version: 2
-  workflow:
-    jobs:
-    - build
-        context: devopsedu-global
+      - checkout
+      - run: 
+          name: Checking environment
+          command: env
+      - run: docker build -t company/app:$CIRCLE_BRANCH .
 ```
 
 Run the pipeline and verify that you can see that the environment variables have been set.
@@ -81,25 +80,25 @@ We now need to update the build configurations so we have the possiblity to push
 
 Change the pipeline to:
 ```
-version: 2
+version: 2.1
+workflows:
+  build-and-push:
+    jobs:
+      - build:
+          context: devopsedu-global
+
 jobs:
   build:
     machine: true
     steps:
-    - checkout
-    - run: 
-      name: Checking environment
-      command: env
-    - run: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
-    - run: docker build --rm=false -t eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1 .
-    - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
-    - run: gcloud --quiet config set project ${GCP_PROJECT}
-    - run: gcloud docker -- push eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1        
-workflows:
-  version: 2
-  workflow:
-    jobs:
-    - build
-        context: devopsedu-global
+      - checkout
+      - run: 
+          name: Checking environment
+          command: env
+      - run: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
+      - run: docker build --rm=false -t eu.gcr.io/${GOOGLE_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_SHA1 .
+      - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
+      - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run: gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_SHA1 
 ```
 build-docker-image-with-circle-ci-2-push-to-google-container-registry/
