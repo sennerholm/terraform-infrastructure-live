@@ -95,10 +95,11 @@ jobs:
       - run: 
           name: Checking environment
           command: env
-      - run: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
-      - run: docker build --rm=false -t eu.gcr.io/${GOOGLE_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_SHA1 .
+      - run: echo ${GOOGLE_AUTH} | base64 -i --decode > ${HOME}/gcp-key.json
       - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run: gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      - run: docker build --rm=false -t eu.gcr.io/${GOOGLE_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_SHA1 .
       - run: gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_SHA1 
 ```
 build-docker-image-with-circle-ci-2-push-to-google-container-registry/
