@@ -1,0 +1,20 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "backend"
+  namespace: "default"
+  labels:
+    app: "backend"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "backend"
+  template:
+    metadata:
+      labels:
+        app: "backend"
+    spec:
+      containers:
+      - name: "devops-realworld-example-backend-1"
+        image: "eu.gcr.io/prepedu-mikael-tf-pr1/devops-realworld-example-backend:8aa9cfa01a052da66fe71b0f2ee49c928c39b6e7"

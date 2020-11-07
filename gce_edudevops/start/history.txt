@@ -1,0 +1,134 @@
+
+  203  cd ..
+  204  ls
+  205  cd ..
+  206  ls
+  207  cd cloudshell_open/terraform-infrastructure-live
+  208  ls
+  209  cd gce_edudevops/
+  210  ls
+  211  cd ..
+  212  cd bootstrap/
+  213  ls
+  214  cd gce_edudevops/
+  215  ls
+  216  less bootstrap.sh 
+  217  curl https://github.com/gruntwork-io/terragrunt/releases/download/v0.23.38/terragrunt_linux_amd64 -o ~/gopath/bin/terragrunt; chmod a+x ~/g
+  218  curl https://github.com/gruntwork-io/terragrunt/releases/download/v0.23.38/terragrunt_linux_amd64 -o ~/gopath/bin/terragrunt; chmod a+x ~/gcurl https://github.com/gruntwork-io/terragrunt/releases/download/v0.23.38/terragrunt_linux_amd64 -o ~/gopath/bin/terragrunt; chmod a+x ~/g
+  219  cd 
+  220  cd gopath/bin/
+  221  cat terragrunt 
+  222  ls -l 
+  223  chmod a+rx terragrunt 
+  224  cat terragrunt 
+  225  terragrunt_version=0.23.38
+  226  cd 
+  227  cat <<EOT > SHA256SUMS.terragrunt
+  228  65e9f64de791ea2c1e46a43a1791301d812adc31d4df67911aa3610ed074eef3  terragrunt_darwin_386
+  229  5c628660e070a262eff9dc80264120c4b5f7a9aa61ce85c5a329606f2097b66e  terragrunt_darwin_amd64
+  230  a57eb577b4c558ce0fc2f1984c850522548456ded2812c5db7763d24ceeb35d4  terragrunt_linux_386
+  231  ac53d5ca2c1528c0353280ef6c2938392b99390c694e30ffa70bbb48d921130a  terragrunt_linux_amd64
+  232  ff8c36a97162d081cefc6d2650dae88873b610d6aed1149f19a7f3750bfd8170  terragrunt_windows_386.exe
+  233  12451509decb121eeecc481922ee164bea7684306b3884116e0f7f79bbe6291a  terragrunt_windows_amd64.exe
+  234  EOT
+  235  curl https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_${osname}_${cpu_arch}.zip -o terraform_${terraform_version}_${osname}_${cpu_arch}.zip
+  236  cpu_arch=amd64
+  237  osname=$(uname -s | tr [:upper:] [:lower:])
+  238  echo $osname 
+  239  curl https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_${osname}_${cpu_arch}.zip -o terraform_${terraform_version}_${osname}_${cpu_arch}.zip
+  240  ls -altr
+  241  terraform_version=0.13.4
+  242  terragrunt_version=0.23.38
+  243  opa_version=0.23.2
+  244  cpu_arch=amd64
+  245  osname=$(uname -s | tr [:upper:] [:lower:])
+  246  cho "Trying to install terragrunt"
+  247  curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${terragrunt_version}/terragrunt_${osname}_${cpu_arch} -o terragrunt_${osname}_${cpu_arch}
+  248  grep terragrunt_${osname}_${cpu_arch} ../SHA256SUMS.terragrunt > terragrunt.sum
+  249  shasum -a 256 -c terragrunt.sum
+  250  grep terragrunt_${osname}_${cpu_arch} ../SHA256SUMS.terragrunt > terragrunt.sum
+  251  grep terragrunt_${osname}_${cpu_arch} SHA256SUMS.terragrunt > terragrunt.sum
+  252  shasum -a 256 -c terragrunt.sum
+  253  mv terragrunt_linux_amd64  gopath//bin
+  254  terragrunt 
+  255  cd gopath/
+  256  ls
+  257  cd i
+  258  cd bin/
+  259  ls
+  260  rm terragrunt
+  261  mv terragrunt_linux_amd64 terragrunt
+  262  chmod a+x terragrunt 
+  263  terragrunt 
+  264  ls
+  265  cd 
+  266  cd ..
+  267  ls
+  268  cd ..
+  269  ls
+  270  cd ..
+  271  ls
+  272  cd gce_edudevops/
+  273  ls
+  274  ls -latr
+  275  cd ../bootstrap/
+  276  ls
+  277  cd gce_edudevops/
+  278  ls
+  279  cat bootstrap.sh 
+  280  cd ..
+  281  find . -name sourceme.sh
+  282  cd ./terraform-infrastructure-live.http/gce_edudevops/
+  283  ls
+  284  source sourceme.sh 
+  285  cd ../
+  286  ls
+  287  cd ..
+  288  cd terraform-infrastructure-live
+  289  ls
+  290  cd gce_multiple/
+  291  ls
+  292  cd europe-north1/
+  293  ls
+  294  cd prod/
+  295  ls
+  296  cd common/
+  297  ls
+  298  cd kubernetes/
+  299  ls
+  300  terragrunt plan
+  301  time terragrunt apply
+  302  gcloud container clusters get-credentials gkeeurope-north1prodcommonkubernetes --region europe-north1 --project prepedu-mikael-tf-pr1
+  303  kubectl get nodes
+  304  pwd
+  305  ls
+  306  cd cloudshell_open/
+  307  ls
+  308  cd terraform-infrastructure-live
+  309  git remote -v
+  310  ls
+  311  cd gce_edudevops/
+  312  ls
+  313  cat README.md 
+  314  ls
+  315  mkdir start
+  316  cd start/
+  317  ls
+  318  history 
+  319  cat - > depl.yaml
+  320  kubectl apply -f depl.yaml 
+  321  kubectl get all
+  322  kubectl port-forward --help
+  323  kubectl get pods
+  324  kubectl port-forward pod/backend-78c667c68c-6525l 8080:5000
+  325  bg
+  326  curl http://localhost:8080
+  327  curl http://localhost:8080/swagger
+  328  curl -v http://localhost:8080/swagger
+  329  curl -v http://localhost:8080/swagger/index.html
+  330  jobs
+  331  %1
+  332  ifconfig eth0
+  333  kubectl port-forward pod/backend-78c667c68c-6525l 172.17.0.4:8080:5000
+  334  kubectl port-forward pod/backend-78c667c68c-6525l --address 0.0.0.0 8080:5000
+  335  history > history.txt
